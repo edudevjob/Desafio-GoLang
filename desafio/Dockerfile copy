@@ -1,0 +1,40 @@
+# MultiStage Build
+
+FROM golang:alpine AS builder
+
+WORKDIR /app
+
+COPY go.mod ./
+COPY main.go ./
+
+RUN go build -o /server
+
+# Mininal Image Base
+# FROM gcr.io/distroless/base-debian10
+FROM scratch
+
+WORKDIR /
+
+COPY --from=builder /server/ /server
+
+EXPOSE 8080
+
+USER nonroot:nonroot
+
+ENTRYPOINT [ "/server"]
+
+# CMD ["/server"]
+
+# go mod init github.com/eduardorecnolo/desafio
+# docker build . -t my-server
+# docker images
+# docker run -p 8080:8080 my-server
+
+# REPOSITORY                       TAG       IMAGE ID       CREATED            SIZE
+# eduardotecnologo/desafio         latest    f6f10c675984   About a minute ago 1.23MB*
+# alpine                           latest    b2aa39c304c2   6 weeks ago        7.05MB**
+# my-server-newdistro              latest    f28c05807006   6 seconds ago      25.9MB***
+# my-server                        latest    70ddc297a999   7 minutes ago      846MB****
+
+# ❯ docker run -p 8080:8080 eduardotecnologo/desafio                                                                    ─╯
+# Fullcycle Rocks!
