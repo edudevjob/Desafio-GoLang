@@ -1,5 +1,5 @@
-
 # Imagem: eduardodeveloper/fullcycle
+# docker push eduardodeveloper/fullcycle:tagname
 
 # ❯ docker run -p 8080:8080 eduardotecnologo/desafio                                                                    ─╯
 # Fullcycle Rocks!
